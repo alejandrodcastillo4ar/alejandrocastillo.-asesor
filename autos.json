@@ -1,1 +1,11 @@
-[]
+[
+  {
+    "marca": "Volkswagen UP",
+    "modelo": "1.0 Take AA 5ptas",
+    "anio": "2018",
+    "km": "109.000",
+    "precio": "14.900.000",
+    "transmision": "Manual",
+    "foto": "https://raw.githubusercontent.com/alejandrodcastillo4ar/alejandrocastillo.-asesor/main/fotos/1779686672674_up1.jpg"
+  }
+]
