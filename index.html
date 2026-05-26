@@ -5,162 +5,247 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alejandro Castillo · Asesor Automotor</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
   :root {
-    --negro: #080c10;
-    --azul-oscuro: #0a1628;
-    --azul: #0d47a1;
-    --azul-medio: #1565c0;
-    --azul-claro: #1e88e5;
-    --acento: #2979ff;
-    --acento-bright: #448aff;
-    --blanco: #f0f4ff;
-    --gris: #8899aa;
-    --gris-claro: #ccd6e0;
-    --borde: rgba(41, 121, 255, 0.2);
-    --rojo: #ef5350;
+    --negro:#080c10; --azul-oscuro:#0a1628; --acento:#2979ff; --acento-bright:#448aff;
+    --blanco:#f0f4ff; --gris:#8899aa; --gris-claro:#ccd6e0;
+    --borde:rgba(41,121,255,0.2); --rojo:#ef5350; --verde:#66bb6a;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { background: var(--negro); color: var(--blanco); font-family: 'Barlow', sans-serif; font-weight: 300; overflow-x: hidden; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--negro);color:var(--blanco);font-family:'Barlow',sans-serif;font-weight:300;overflow-x:hidden;}
 
   /* HEADER */
-  header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(8,12,16,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--borde); }
-  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.1em; color: var(--blanco); }
-  .logo span { color: var(--acento-bright); }
-  nav a { color: var(--gris-claro); text-decoration: none; font-family: 'Barlow Condensed', sans-serif; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; margin-left: 2rem; transition: color 0.2s; }
-  nav a:hover { color: var(--acento-bright); }
-  .admin-btn { background: none; border: 1px solid var(--borde); color: var(--gris); padding: 0.3rem 0.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; margin-left: 2rem; }
-  .admin-btn:hover { border-color: var(--acento); color: var(--acento-bright); }
+  header{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,12,16,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--borde);}
+  .logo{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.1em;}
+  .logo span{color:var(--acento-bright);}
+  nav a{color:var(--gris-claro);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;letter-spacing:0.08em;text-transform:uppercase;margin-left:2rem;transition:color 0.2s;}
+  nav a:hover{color:var(--acento-bright);}
+  .admin-btn{background:none;border:1px solid var(--borde);color:var(--gris);padding:0.3rem 0.8rem;font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;margin-left:2rem;}
+  .admin-btn:hover{border-color:var(--acento);color:var(--acento-bright);}
 
   /* HERO */
-  .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; padding: 100px 2rem 60px; }
-  .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(13,71,161,0.35) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 20% 80%, rgba(41,121,255,0.12) 0%, transparent 60%), linear-gradient(180deg, #080c10 0%, #0a1628 50%, #080c10 100%); }
-  .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(41,121,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(41,121,255,0.06) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%); }
-  .hero-content { position: relative; z-index: 2; max-width: 700px; }
-  .hero-tag { font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--acento-bright); margin-bottom: 1.5rem; opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards; }
-  .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.5rem, 10vw, 7rem); line-height: 0.9; letter-spacing: 0.02em; color: var(--blanco); opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards; }
-  .hero h1 em { font-style: normal; color: var(--acento-bright); display: block; }
-  .hero-sub { margin-top: 1.5rem; font-size: 1.05rem; color: var(--gris); font-weight: 400; line-height: 1.6; opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards; }
-  .hero-cta { margin-top: 2.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease 0.8s forwards; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:100px 2rem 60px;}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(13,71,161,0.35) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(41,121,255,0.12) 0%,transparent 60%),linear-gradient(180deg,#080c10 0%,#0a1628 50%,#080c10 100%);}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(41,121,255,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(41,121,255,0.06) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);}
+  .hero-content{position:relative;z-index:2;max-width:700px;}
+  .hero-tag{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--acento-bright);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.8s ease 0.2s forwards;}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,10vw,7rem);line-height:0.9;color:var(--blanco);opacity:0;animation:fadeUp 0.8s ease 0.4s forwards;}
+  .hero h1 em{font-style:normal;color:var(--acento-bright);display:block;}
+  .hero-sub{margin-top:1.5rem;font-size:1.05rem;color:var(--gris);font-weight:400;line-height:1.6;opacity:0;animation:fadeUp 0.8s ease 0.6s forwards;}
+  .hero-cta{margin-top:2.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp 0.8s ease 0.8s forwards;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
   /* BOTONES */
-  .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--acento); color: #fff; text-decoration: none; padding: 0.75rem 2rem; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; transition: background 0.2s, transform 0.15s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); cursor: pointer; border: none; }
-  .btn-primary:hover { background: var(--acento-bright); transform: translateY(-2px); }
-  .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; border: 1px solid var(--borde); color: var(--gris-claro); text-decoration: none; padding: 0.75rem 2rem; font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; transition: border-color 0.2s, color 0.2s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); cursor: pointer; background: none; }
-  .btn-secondary:hover { border-color: var(--acento-bright); color: var(--acento-bright); }
+  .btn-primary{display:inline-flex;align-items:center;gap:0.5rem;background:var(--acento);color:#fff;text-decoration:none;padding:0.75rem 2rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;transition:background 0.2s,transform 0.15s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);cursor:pointer;border:none;}
+  .btn-primary:hover{background:var(--acento-bright);transform:translateY(-2px);}
+  .btn-secondary{display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--borde);color:var(--gris-claro);text-decoration:none;padding:0.75rem 2rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;transition:border-color 0.2s,color 0.2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);cursor:pointer;background:none;}
+  .btn-secondary:hover{border-color:var(--acento-bright);color:var(--acento-bright);}
+  .btn-wa{display:inline-flex;align-items:center;gap:0.5rem;background:#25d366;color:#fff;text-decoration:none;padding:0.75rem 2rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;transition:background 0.2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);cursor:pointer;border:none;}
+  .btn-wa:hover{background:#1ebe5d;}
+  .btn-edit{background:rgba(41,121,255,0.1);border:1px solid var(--borde);color:var(--acento-bright);padding:0.4rem 0.8rem;font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;flex-shrink:0;}
+  .btn-edit:hover{background:rgba(41,121,255,0.2);border-color:var(--acento);}
+  .btn-delete{background:rgba(239,83,80,0.1);border:1px solid rgba(239,83,80,0.3);color:var(--rojo);padding:0.4rem 0.8rem;font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;flex-shrink:0;}
+  .btn-delete:hover{background:rgba(239,83,80,0.2);border-color:var(--rojo);}
 
   /* SECCIONES */
-  section { padding: 80px 2rem; max-width: 1100px; margin: 0 auto; }
-  .section-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--acento-bright); margin-bottom: 0.5rem; }
-  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); letter-spacing: 0.04em; color: var(--blanco); margin-bottom: 3rem; }
-  .divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--borde), transparent); }
+  section{padding:80px 2rem;max-width:1100px;margin:0 auto;}
+  .section-label{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--acento-bright);margin-bottom:0.5rem;}
+  .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);letter-spacing:0.04em;color:var(--blanco);margin-bottom:3rem;}
+  .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--borde),transparent);}
 
-  /* CATÁLOGO */
-  .catalogo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-  .auto-card { background: var(--azul-oscuro); border: 1px solid var(--borde); overflow: hidden; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; position: relative; }
-  .auto-card:hover { transform: translateY(-4px); border-color: var(--acento); box-shadow: 0 8px 40px rgba(41,121,255,0.2); }
-  .auto-card-img { width: 100%; height: 200px; object-fit: cover; display: block; }
-  .auto-card-img-placeholder { width: 100%; height: 200px; background: linear-gradient(135deg, #0d1f3c 0%, #0a1628 100%); display: flex; align-items: center; justify-content: center; color: var(--borde); font-size: 3rem; }
-  .auto-card-badge { position: absolute; top: 12px; left: 0; background: var(--acento); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.2rem 0.75rem; font-weight: 600; }
-  .auto-card-body { padding: 1.25rem 1.5rem 1rem; }
-  .auto-marca { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--acento-bright); margin-bottom: 0.25rem; }
-  .auto-modelo { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.04em; color: var(--blanco); line-height: 1; margin-bottom: 0.5rem; }
-  .auto-specs { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-  .auto-spec { font-size: 0.8rem; color: var(--gris); }
-  .auto-precio { font-family: 'Barlow Condensed', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--blanco); letter-spacing: 0.02em; }
-  .auto-precio span { font-size: 0.85rem; color: var(--gris); font-weight: 400; }
-  .auto-card-footer { padding: 0 1.5rem 1.25rem; display: flex; gap: 0.75rem; }
-  .btn-consultar { flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.4rem; background: var(--acento); color: #fff; text-decoration: none; padding: 0.6rem 1rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; transition: background 0.2s; }
-  .btn-consultar:hover { background: var(--acento-bright); }
-  .empty-state { grid-column: 1/-1; text-align: center; padding: 4rem 2rem; border: 1px dashed var(--borde); color: var(--gris); }
+  /* CATÁLOGO GRILLA */
+  .catalogo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;}
+  .auto-card{background:var(--azul-oscuro);border:1px solid var(--borde);overflow:hidden;transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;position:relative;cursor:pointer;}
+  .auto-card:hover{transform:translateY(-4px);border-color:var(--acento);box-shadow:0 8px 40px rgba(41,121,255,0.2);}
+  .auto-card-img{width:100%;height:200px;object-fit:cover;display:block;}
+  .auto-card-img-placeholder{width:100%;height:200px;background:linear-gradient(135deg,#0d1f3c 0%,#0a1628 100%);display:flex;align-items:center;justify-content:center;font-size:3rem;}
+  .auto-card-badge{position:absolute;top:12px;left:0;background:var(--acento);color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.75rem;font-weight:600;}
+  .auto-card-body{padding:1.25rem 1.5rem 1rem;}
+  .auto-marca{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--acento-bright);margin-bottom:0.25rem;}
+  .auto-modelo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.04em;color:var(--blanco);line-height:1;margin-bottom:0.5rem;}
+  .auto-specs{display:flex;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;}
+  .auto-spec{font-size:0.8rem;color:var(--gris);}
+  .auto-precio{font-family:'Barlow Condensed',sans-serif;font-size:1.4rem;font-weight:700;color:var(--blanco);}
+  .auto-precio span{font-size:0.85rem;color:var(--gris);font-weight:400;}
+  .auto-card-footer{padding:0.75rem 1.5rem 1.25rem;display:flex;align-items:center;justify-content:space-between;}
+  .auto-card-ver{font-family:'Barlow Condensed',sans-serif;font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--acento-bright);}
+  .empty-state{grid-column:1/-1;text-align:center;padding:4rem 2rem;border:1px dashed var(--borde);color:var(--gris);}
+
+  /* MODAL AUTO DETALLE */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.9);backdrop-filter:blur(8px);z-index:1000;display:none;align-items:flex-start;justify-content:center;padding:2rem 1rem;overflow-y:auto;}
+  .modal-overlay.active{display:flex;}
+  .modal{background:var(--azul-oscuro);border:1px solid var(--borde);width:100%;max-width:800px;position:relative;margin:auto;}
+  .modal-close{position:absolute;top:1rem;right:1rem;background:rgba(0,0,0,0.5);border:none;color:var(--blanco);font-size:1.5rem;cursor:pointer;line-height:1;z-index:10;width:36px;height:36px;display:flex;align-items:center;justify-content:center;}
+  .modal-close:hover{color:var(--acento-bright);}
+
+  /* GALERÍA */
+  .galeria{position:relative;background:#000;}
+  .galeria-main{width:100%;height:350px;object-fit:cover;display:block;}
+  .galeria-main-placeholder{width:100%;height:350px;background:linear-gradient(135deg,#0d1f3c,#0a1628);display:flex;align-items:center;justify-content:center;font-size:5rem;}
+  .galeria-thumbs{display:flex;gap:0.5rem;padding:0.5rem;background:rgba(0,0,0,0.5);overflow-x:auto;}
+  .galeria-thumb{width:80px;height:55px;object-fit:cover;cursor:pointer;opacity:0.6;transition:opacity 0.2s;flex-shrink:0;border:2px solid transparent;}
+  .galeria-thumb.active{opacity:1;border-color:var(--acento-bright);}
+  .galeria-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.6);border:none;color:#fff;font-size:1.5rem;cursor:pointer;padding:0.5rem 0.75rem;transition:background 0.2s;}
+  .galeria-nav:hover{background:rgba(41,121,255,0.6);}
+  .galeria-prev{left:0.5rem;}
+  .galeria-next{right:0.5rem;}
+
+  /* MODAL BODY */
+  .modal-body{padding:2rem;}
+  .modal-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;}
+  .modal-marca{font-family:'Barlow Condensed',sans-serif;font-size:0.8rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--acento-bright);margin-bottom:0.25rem;}
+  .modal-modelo{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;line-height:1;color:var(--blanco);}
+  .modal-precio{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--acento-bright);text-align:right;}
+  .modal-precio small{display:block;font-family:'Barlow',sans-serif;font-size:0.75rem;color:var(--gris);font-weight:300;text-transform:uppercase;letter-spacing:0.1em;}
+  .modal-specs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;border:1px solid var(--borde);padding:1rem;}
+  .modal-spec-item{text-align:center;}
+  .modal-spec-label{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:0.25rem;}
+  .modal-spec-value{font-size:1rem;font-weight:500;color:var(--blanco);}
+  .modal-desc{font-size:0.95rem;color:var(--gris);line-height:1.6;margin-bottom:1.5rem;}
+  .modal-actions{display:flex;gap:1rem;flex-wrap:wrap;}
+  .modal-actions a,.modal-actions button{flex:1;justify-content:center;min-width:140px;}
 
   /* CONTACTO */
-  .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-  .contacto-item { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 2rem; }
-  .contacto-icon { width: 48px; height: 48px; background: rgba(41,121,255,0.1); border: 1px solid var(--borde); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .contacto-icon svg { width: 20px; height: 20px; fill: var(--acento-bright); }
-  .contacto-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gris); margin-bottom: 0.25rem; }
-  .contacto-valor { font-size: 1rem; color: var(--blanco); font-weight: 400; }
-  .contacto-valor a { color: var(--blanco); text-decoration: none; transition: color 0.2s; }
-  .contacto-valor a:hover { color: var(--acento-bright); }
-  .horario-tabla { width: 100%; border-collapse: collapse; }
-  .horario-tabla td { padding: 0.5rem 0; font-size: 0.95rem; border-bottom: 1px solid var(--borde); }
-  .horario-tabla td:first-child { color: var(--gris); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.85rem; width: 40%; }
-  .horario-tabla td:last-child { color: var(--blanco); text-align: right; }
+  .contacto-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+  .contacto-item{display:flex;gap:1rem;align-items:flex-start;margin-bottom:2rem;}
+  .contacto-icon{width:48px;height:48px;background:rgba(41,121,255,0.1);border:1px solid var(--borde);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .contacto-icon svg{width:20px;height:20px;fill:var(--acento-bright);}
+  .contacto-label{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:0.25rem;}
+  .contacto-valor{font-size:1rem;color:var(--blanco);font-weight:400;}
+  .contacto-valor a{color:var(--blanco);text-decoration:none;transition:color 0.2s;}
+  .contacto-valor a:hover{color:var(--acento-bright);}
+  .horario-tabla{width:100%;border-collapse:collapse;}
+  .horario-tabla td{padding:0.5rem 0;font-size:0.95rem;border-bottom:1px solid var(--borde);}
+  .horario-tabla td:first-child{color:var(--gris);font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em;text-transform:uppercase;font-size:0.85rem;width:40%;}
+  .horario-tabla td:last-child{color:var(--blanco);text-align:right;}
 
-  /* WHATSAPP FLOTANTE */
-  .whatsapp-float { position: fixed; bottom: 2rem; right: 2rem; z-index: 200; width: 56px; height: 56px; background: #25d366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.2s; text-decoration: none; }
-  .whatsapp-float:hover { transform: scale(1.1); }
-  .whatsapp-float svg { width: 28px; height: 28px; fill: #fff; }
+  /* FORMS */
+  .form-group{margin-bottom:1.25rem;}
+  .form-group label{display:block;font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:0.5rem;}
+  .form-group input,.form-group select,.form-group textarea{width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--borde);color:var(--blanco);padding:0.65rem 1rem;font-family:'Barlow',sans-serif;font-size:0.95rem;outline:none;transition:border-color 0.2s;}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--acento);}
+  .form-group select option{background:var(--azul-oscuro);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .error-msg{color:var(--rojo);font-size:0.85rem;margin-top:0.5rem;display:none;}
+  .success-msg{color:var(--verde);font-size:0.85rem;margin-top:0.5rem;display:none;}
+  .img-preview{width:100%;height:150px;object-fit:cover;margin-top:0.5rem;display:none;border:1px solid var(--borde);}
+  .fotos-lista{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.5rem;min-height:65px;padding:4px;border:1px dashed var(--borde);}
+  .fotos-lista-label{font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gris);width:100%;margin-bottom:0.25rem;}
+  .foto-thumb-admin{position:relative;width:80px;height:55px;cursor:grab;user-select:none;}
+  .foto-thumb-admin.dragging{opacity:0.4;cursor:grabbing;}
+  .foto-thumb-admin.drag-over{border:2px solid var(--acento-bright);}
+  .foto-thumb-admin img{width:100%;height:100%;object-fit:cover;pointer-events:none;}
+  .foto-thumb-admin .foto-badge{position:absolute;bottom:0;left:0;right:0;background:rgba(41,121,255,0.8);color:#fff;font-size:9px;text-align:center;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.05em;padding:1px;}
+  .foto-thumb-admin button{position:absolute;top:-5px;right:-5px;background:var(--rojo);border:none;color:#fff;width:18px;height:18px;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:50%;z-index:2;}
 
-  /* FOOTER */
-  footer { text-align: center; padding: 2rem; color: var(--gris); font-size: 0.8rem; border-top: 1px solid var(--borde); letter-spacing: 0.05em; }
-
-  /* ── MODAL ADMIN LOGIN ── */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; }
-  .modal-overlay.active { display: flex; }
-  .modal { background: var(--azul-oscuro); border: 1px solid var(--borde); padding: 2.5rem; width: 100%; max-width: 420px; position: relative; }
-  .modal-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.05em; margin-bottom: 1.5rem; }
-  .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--gris); font-size: 1.5rem; cursor: pointer; line-height: 1; }
-  .modal-close:hover { color: var(--blanco); }
-  .form-group { margin-bottom: 1.25rem; }
-  .form-group label { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gris); margin-bottom: 0.5rem; }
-  .form-group input, .form-group select, .form-group textarea { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--borde); color: var(--blanco); padding: 0.65rem 1rem; font-family: 'Barlow', sans-serif; font-size: 0.95rem; outline: none; transition: border-color 0.2s; }
-  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--acento); }
-  .form-group select option { background: var(--azul-oscuro); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .error-msg { color: var(--rojo); font-size: 0.85rem; margin-top: 0.5rem; display: none; }
-  .success-msg { color: #66bb6a; font-size: 0.85rem; margin-top: 0.5rem; display: none; }
+  /* MODAL LOGIN */
+  .modal-login{background:var(--azul-oscuro);border:1px solid var(--borde);padding:2.5rem;width:100%;max-width:420px;position:relative;}
+  .modal-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.05em;margin-bottom:1.5rem;}
 
   /* PANEL ADMIN */
-  .admin-panel { background: var(--azul-oscuro); border: 1px solid var(--borde); padding: 2rem; margin: 2rem; border-radius: 0; display: none; }
-  .admin-panel.active { display: block; }
-  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
-  .admin-panel-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 0.05em; }
-  .admin-autos-lista { margin-top: 2rem; }
-  .admin-auto-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; border: 1px solid var(--borde); margin-bottom: 0.75rem; background: rgba(255,255,255,0.02); }
-  .admin-auto-img { width: 80px; height: 55px; object-fit: cover; flex-shrink: 0; background: #0d1f3c; }
-  .admin-auto-info { flex: 1; }
-  .admin-auto-nombre { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 600; }
-  .admin-auto-detalle { font-size: 0.8rem; color: var(--gris); margin-top: 0.2rem; }
-  .btn-delete { background: rgba(239,83,80,0.1); border: 1px solid rgba(239,83,80,0.3); color: var(--rojo); padding: 0.4rem 0.8rem; font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; flex-shrink: 0; }
-  .btn-delete:hover { background: rgba(239,83,80,0.2); border-color: var(--rojo); }
-  .loading { text-align: center; padding: 2rem; color: var(--gris); }
-  .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid var(--borde); border-top-color: var(--acento); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 0.5rem; vertical-align: middle; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  .admin-panel{background:var(--azul-oscuro);border:1px solid var(--borde);padding:2rem;margin:2rem;display:none;}
+  .admin-panel.active{display:block;}
+  .admin-tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:1px solid var(--borde);}
+  .admin-tab{background:none;border:none;color:var(--gris);padding:0.75rem 1.5rem;font-family:'Barlow Condensed',sans-serif;font-size:0.9rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.2s;}
+  .admin-tab.active{color:var(--acento-bright);border-bottom-color:var(--acento-bright);}
+  .admin-tab-content{display:none;}
+  .admin-tab-content.active{display:block;}
+  .admin-auto-item{display:flex;align-items:center;gap:1rem;padding:1rem;border:1px solid var(--borde);margin-bottom:0.75rem;background:rgba(255,255,255,0.02);}
+  .admin-auto-img{width:80px;height:55px;object-fit:cover;flex-shrink:0;background:#0d1f3c;display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+  .admin-auto-info{flex:1;min-width:0;}
+  .admin-auto-nombre{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:600;}
+  .admin-auto-detalle{font-size:0.8rem;color:var(--gris);margin-top:0.2rem;}
+  .admin-auto-btns{display:flex;gap:0.5rem;flex-shrink:0;}
+  .loading{text-align:center;padding:2rem;color:var(--gris);}
+  .spinner{display:inline-block;width:20px;height:20px;border:2px solid var(--borde);border-top-color:var(--acento);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:0.5rem;vertical-align:middle;}
+  @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* IMAGEN PREVIEW */
-  .img-preview { width: 100%; height: 150px; object-fit: cover; margin-top: 0.5rem; display: none; border: 1px solid var(--borde); }
+  /* WHATSAPP */
+  .whatsapp-float{position:fixed;bottom:2rem;right:2rem;z-index:200;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);transition:transform 0.2s;text-decoration:none;}
+  .whatsapp-float:hover{transform:scale(1.1);}
+  .whatsapp-float svg{width:28px;height:28px;fill:#fff;}
+  footer{text-align:center;padding:2rem;color:var(--gris);font-size:0.8rem;border-top:1px solid var(--borde);letter-spacing:0.05em;}
 
-  @media (max-width: 680px) {
-    .contacto-grid { grid-template-columns: 1fr; }
-    nav { display: none; }
-    .catalogo-grid { grid-template-columns: 1fr; }
-    .form-row { grid-template-columns: 1fr; }
+
+  /* TURNOS */
+  .turnos-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:1.5rem;}
+  .calendario{border:1px solid var(--borde);padding:1rem;}
+  .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+  .cal-title{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.05em;}
+  .cal-nav{background:none;border:1px solid var(--borde);color:var(--gris-claro);padding:0.2rem 0.6rem;cursor:pointer;font-size:1rem;transition:all 0.2s;}
+  .cal-nav:hover{border-color:var(--acento);color:var(--acento-bright);}
+  .cal-dias-header{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:4px;}
+  .cal-dia-label{text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gris);padding:0.25rem 0;}
+  .cal-dias{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;}
+  .cal-dia{text-align:center;padding:0.4rem 0.2rem;font-size:0.85rem;cursor:pointer;border:1px solid transparent;transition:all 0.2s;border-radius:2px;}
+  .cal-dia:hover:not(.cal-dia-disabled):not(.cal-dia-empty){background:rgba(41,121,255,0.15);border-color:var(--borde);}
+  .cal-dia.active{background:var(--acento);color:#fff;border-color:var(--acento);}
+  .cal-dia-disabled{color:var(--borde);cursor:not-allowed;}
+  .cal-dia-empty{cursor:default;}
+  .cal-dia-hoy{border-color:var(--acento-bright);color:var(--acento-bright);}
+  .horarios-lista{border:1px solid var(--borde);padding:1rem;max-height:320px;overflow-y:auto;}
+  .horarios-titulo{font-family:'Barlow Condensed',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:1rem;}
+  .horario-btn{display:block;width:100%;text-align:left;background:rgba(255,255,255,0.03);border:1px solid var(--borde);color:var(--blanco);padding:0.5rem 1rem;font-family:'Barlow Condensed',sans-serif;font-size:0.95rem;letter-spacing:0.05em;cursor:pointer;margin-bottom:0.4rem;transition:all 0.2s;}
+  .horario-btn:hover{background:rgba(41,121,255,0.15);border-color:var(--acento);}
+  .horario-btn.active{background:var(--acento);border-color:var(--acento);color:#fff;}
+  .horario-btn.ocupado{background:rgba(255,255,255,0.02);color:var(--borde);cursor:not-allowed;text-decoration:line-through;}
+  .turno-form{margin-top:1.5rem;border:1px solid var(--borde);padding:1.5rem;}
+  .turno-resumen{background:rgba(41,121,255,0.08);border:1px solid var(--borde);padding:1rem;margin-bottom:1rem;font-size:0.9rem;}
+  .turno-resumen strong{color:var(--acento-bright);}
+
+  /* ADMIN TURNOS */
+  .turno-item{display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem;border:1px solid var(--borde);margin-bottom:0.5rem;background:rgba(255,255,255,0.02);flex-wrap:wrap;gap:0.5rem;}
+  .turno-info{flex:1;}
+  .turno-fecha{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:600;color:var(--acento-bright);}
+  .turno-detalle{font-size:0.8rem;color:var(--gris);margin-top:0.2rem;}
+
+  @media(max-width:680px){
+    .contacto-grid{grid-template-columns:1fr;}
+    nav{display:none;}
+    .catalogo-grid{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .modal-specs-grid{grid-template-columns:1fr 1fr;}
+    .admin-auto-btns{flex-direction:column;}
+    .modal-header{flex-direction:column;}
+    .modal-precio{text-align:left;}
   }
 </style>
 </head>
 <body>
 
-<!-- CONFIGURACIÓN — EDITÁ ESTOS VALORES -->
 <script>
-  const CONFIG = {
-    GITHUB_TOKEN: ['ghp_pPFD','imeOe9NS','6Sooqnmo','oZkNWRzO','4l0K6hly'].join(''),
-    GITHUB_USER: 'alejandrodcastillo4ar',
-    GITHUB_REPO: 'alejandrocastillo.-asesor',
-    GITHUB_BRANCH: 'main',
-    ADMIN_PASSWORD: 'asesor1788',
-    WHATSAPP: '542612516289',
-    DATOS_FILE: 'autos.json'
-  };
+const CONFIG = {
+  GITHUB_TOKEN: ['ghp_pPFD','imeOe9NS','6Sooqnmo','oZkNWRzO','4l0K6hly'].join(''),
+  GITHUB_USER: 'alejandrodcastillo4ar',
+  GITHUB_REPO: 'alejandrocastillo.-asesor',
+  GITHUB_BRANCH: 'main',
+  ADMIN_PASSWORD: 'asesor1788',
+  DATOS_FILE: 'autos.json',
+  CONFIG_FILE: 'config.json',
+  EMAILJS_PUBLIC: 'TTdxgzVbkucY1EsGu',
+  EMAILJS_SERVICE: 'service_vip1zu9',
+  EMAILJS_TEMPLATE: 'template_474g9is'
+};
+
+let siteConfig = {
+  whatsapp: '542612516289',
+  mail: 'alejandrodcastillo4@gmail.com',
+  direccion: 'Juan Pringles 1788, San José, Guaymallén, Mendoza',
+  horario_semana: '09:30 – 19:30 hs',
+  horario_sabado: '10:00 – 13:30 hs',
+  hero_subtitulo: 'Te ayudo a encontrar el vehículo ideal con asesoramiento personalizado, financiación a medida y toda la gestión sin complicaciones.'
+};
+
+let fotosEdicion = []; // fotos del auto que se está editando
 </script>
 
 <header>
   <div class="logo">Alejandro Castillo <span>·</span> Asesor</div>
   <nav>
     <a href="#catalogo">Catálogo</a>
+    <a href="#turnos">Turnos</a>
     <a href="#contacto">Contacto</a>
     <button class="admin-btn" onclick="abrirLogin()">⚙ Admin</button>
   </nav>
@@ -173,10 +258,10 @@
   <div class="hero-content">
     <div class="hero-tag">Asesor Automotor · One Quest Automotores</div>
     <h1>Tu próximo <em>auto,</em> sin vueltas.</h1>
-    <p class="hero-sub">Te ayudo a encontrar el vehículo ideal con asesoramiento personalizado, financiación a medida y toda la gestión sin complicaciones.</p>
+    <p class="hero-sub" id="hero-sub"></p>
     <div class="hero-cta">
       <a href="#catalogo" class="btn-primary">Ver catálogo</a>
-      <a href="https://wa.me/542612516289" target="_blank" class="btn-secondary">Consultame</a>
+      <a id="hero-wa" href="#" target="_blank" class="btn-secondary">Consultame</a>
     </div>
   </div>
 </div>
@@ -185,63 +270,84 @@
 
 <!-- PANEL ADMIN -->
 <div class="admin-panel" id="adminPanel">
-  <div class="admin-header">
-    <div class="admin-panel-title">⚙ Panel de Administración</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:0.05em;">⚙ Panel de Administración</div>
     <button class="btn-delete" onclick="cerrarAdmin()">Cerrar panel</button>
   </div>
-
-  <!-- FORMULARIO NUEVO AUTO -->
-  <div style="border: 1px solid var(--borde); padding: 1.5rem; margin-bottom: 2rem;">
-    <div class="section-label" style="margin-bottom:1rem;">Agregar nuevo auto</div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Marca</label>
-        <input type="text" id="f-marca" placeholder="Fiat">
-      </div>
-      <div class="form-group">
-        <label>Modelo</label>
-        <input type="text" id="f-modelo" placeholder="Cronos Drive">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Año</label>
-        <input type="text" id="f-anio" placeholder="2024">
-      </div>
-      <div class="form-group">
-        <label>Kilometraje</label>
-        <input type="text" id="f-km" placeholder="0 km">
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Precio</label>
-        <input type="text" id="f-precio" placeholder="$XX.XXX.XXX">
-      </div>
-      <div class="form-group">
-        <label>Transmisión</label>
-        <select id="f-transmision">
-          <option>Manual</option>
-          <option>Automático</option>
-          <option>CVT</option>
-        </select>
-      </div>
-    </div>
-    <div class="form-group">
-      <label>Foto del auto</label>
-      <input type="file" id="f-foto" accept="image/*" onchange="previewFoto(this)">
-      <img id="foto-preview" class="img-preview">
-    </div>
-    <div id="form-error" class="error-msg">Completá todos los campos.</div>
-    <div id="form-success" class="success-msg">✓ Auto agregado correctamente.</div>
-    <button class="btn-primary" onclick="agregarAuto()" id="btn-agregar" style="margin-top:1rem;">
-      Agregar auto
-    </button>
+  <div class="admin-tabs">
+    <button class="admin-tab active" onclick="switchTab('autos',this)">Autos</button>
+    <button class="admin-tab" onclick="switchTab('turnos',this)">Turnos</button>
+    <button class="admin-tab" onclick="switchTab('config',this)">Configuración</button>
   </div>
 
-  <!-- LISTA DE AUTOS -->
-  <div class="section-label" style="margin-bottom:1rem;">Autos en catálogo</div>
-  <div id="admin-lista"><div class="loading"><span class="spinner"></span> Cargando...</div></div>
+  <!-- TAB AUTOS -->
+  <div class="admin-tab-content active" id="tab-autos">
+    <div style="border:1px solid var(--borde);padding:1.5rem;margin-bottom:2rem;">
+      <div class="section-label" style="margin-bottom:1rem;" id="form-auto-titulo">Agregar nuevo auto</div>
+      <input type="hidden" id="f-edit-index" value="-1">
+      <div class="form-row">
+        <div class="form-group"><label>Marca</label><input type="text" id="f-marca" placeholder="Fiat"></div>
+        <div class="form-group"><label>Modelo</label><input type="text" id="f-modelo" placeholder="Cronos Drive"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Año</label><input type="text" id="f-anio" placeholder="2024"></div>
+        <div class="form-group"><label>Kilometraje</label><input type="text" id="f-km" placeholder="0 km"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Precio</label><input type="text" id="f-precio" placeholder="$XX.XXX.XXX"></div>
+        <div class="form-group"><label>Transmisión</label>
+          <select id="f-transmision"><option>Manual</option><option>Automático</option><option>CVT</option></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Descripción <span style="color:var(--gris);font-size:0.75rem;">(opcional)</span></label>
+        <textarea id="f-desc" rows="2" placeholder="Ej: Excelente estado, único dueño, service al día..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Fotos <span style="color:var(--gris);font-size:0.75rem;">(podés subir varias)</span></label>
+        <input type="file" id="f-fotos" accept="image/*" multiple onchange="previewFotos(this)">
+        <div id="fotos-preview-lista" class="fotos-lista"></div>
+      </div>
+      <div id="form-error" class="error-msg">Completá todos los campos obligatorios.</div>
+      <div id="form-success" class="success-msg">✓ Guardado correctamente.</div>
+      <div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
+        <button class="btn-primary" onclick="guardarAuto()" id="btn-agregar">Agregar auto</button>
+        <button class="btn-secondary" onclick="cancelarEdicion()" id="btn-cancelar" style="display:none;">Cancelar</button>
+      </div>
+    </div>
+    <div class="section-label" style="margin-bottom:1rem;">Autos en catálogo</div>
+    <div id="admin-lista"><div class="loading"><span class="spinner"></span> Cargando...</div></div>
+  </div>
+
+
+  <!-- TAB TURNOS -->
+  <div class="admin-tab-content" id="tab-turnos">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:1rem;">
+      <div class="section-label">Turnos agendados</div>
+      <button class="btn-delete" onclick="limpiarTurnosPasados()" style="font-size:0.75rem;">Limpiar pasados</button>
+    </div>
+    <div id="admin-turnos-lista"><div class="loading"><span class="spinner"></span> Cargando...</div></div>
+  </div>
+
+  <!-- TAB CONFIG -->
+  <div class="admin-tab-content" id="tab-config">
+    <div style="border:1px solid var(--borde);padding:1.5rem;">
+      <div class="section-label" style="margin-bottom:1.5rem;">Información del sitio</div>
+      <div class="form-row">
+        <div class="form-group"><label>WhatsApp (solo números)</label><input type="text" id="cfg-whatsapp"></div>
+        <div class="form-group"><label>Mail de contacto</label><input type="text" id="cfg-mail"></div>
+      </div>
+      <div class="form-group"><label>Dirección</label><input type="text" id="cfg-direccion"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Horario lunes a viernes</label><input type="text" id="cfg-horario-semana"></div>
+        <div class="form-group"><label>Horario sábados</label><input type="text" id="cfg-horario-sabado"></div>
+      </div>
+      <div class="form-group"><label>Subtítulo del hero</label><textarea id="cfg-hero-sub" rows="3"></textarea></div>
+      <div id="cfg-error" class="error-msg">Error al guardar.</div>
+      <div id="cfg-success" class="success-msg">✓ Configuración guardada.</div>
+      <button class="btn-primary" onclick="guardarConfig()" id="btn-cfg" style="margin-top:0.5rem;">Guardar configuración</button>
+    </div>
+  </div>
 </div>
 
 <!-- CATÁLOGO -->
@@ -258,132 +364,207 @@
 <!-- CONTACTO -->
 <section id="contacto">
   <div class="section-label">Estoy para ayudarte</div>
-  <div class="section-title">Contacto</div>
+  <div class="section-title">Escribime</div>
   <div class="contacto-grid">
     <div>
       <div class="contacto-item">
-        <div class="contacto-icon">
-          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </div>
-        <div>
-          <div class="contacto-label">WhatsApp</div>
-          <div class="contacto-valor"><a href="https://wa.me/542612516289" target="_blank">+54 261 251-6289</a></div>
-        </div>
+        <div class="contacto-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div>
+        <div><div class="contacto-label">Dirección</div><div class="contacto-valor" id="info-direccion"></div></div>
       </div>
       <div class="contacto-item">
-        <div class="contacto-icon">
-          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        </div>
-        <div>
-          <div class="contacto-label">Mail</div>
-          <!-- EDITÁ EL MAIL ACÁ -->
-          <div class="contacto-valor"><a href="mailto:tu@mail.com">tu@mail.com</a></div>
-        </div>
+        <div class="contacto-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+        <div><div class="contacto-label">Mail</div><div class="contacto-valor"><a id="info-mail-link" href="#">-</a></div></div>
       </div>
       <div class="contacto-item">
-        <div class="contacto-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+        <div class="contacto-icon"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+        <div><div class="contacto-label">WhatsApp</div><div class="contacto-valor"><a id="info-wa-link" href="#" target="_blank">+54 261 251-6289</a></div></div>
+      </div>
+      <div class="contacto-label" style="margin-bottom:1rem;margin-top:0.5rem;">Horarios de atención</div>
+      <table class="horario-tabla">
+        <tr><td>Lunes a viernes</td><td id="info-horario-semana"></td></tr>
+        <tr><td>Sábados</td><td id="info-horario-sabado"></td></tr>
+        <tr><td>Domingos</td><td>Cerrado</td></tr>
+      </table>
+    </div>
+    <div>
+      <div class="section-label" style="margin-bottom:1rem;">Enviame un mensaje</div>
+      <div class="form-row">
+        <div class="form-group"><label>Nombre</label><input type="text" id="c-nombre" placeholder="Juan"></div>
+        <div class="form-group"><label>Apellido</label><input type="text" id="c-apellido" placeholder="Pérez"></div>
+      </div>
+      <div class="form-group"><label>Teléfono</label><input type="text" id="c-telefono" placeholder="261 XXX-XXXX"></div>
+      <div class="form-group">
+        <label>Tipo de consulta</label>
+        <select id="c-tipo">
+          <option value="Compra de vehículo">Quiero comprar un vehículo</option>
+          <option value="Consignación">Quiero dejar mi auto en consignación</option>
+          <option value="Consulta general">Consulta general</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Auto de interés <span style="color:var(--gris);font-size:0.75rem;">(opcional)</span></label><input type="text" id="c-auto" placeholder="Ej: Fiat Cronos 2023"></div>
+      <div class="form-group"><label>Mensaje <span style="color:var(--gris);font-size:0.75rem;">(opcional)</span></label><textarea id="c-mensaje" rows="3" placeholder="¿Alguna consulta adicional?"></textarea></div>
+      <div id="contacto-error" class="error-msg">Completá nombre, apellido y teléfono.</div>
+      <div id="contacto-success" class="success-msg">✓ Mensaje enviado. Te contacto pronto.</div>
+      <button class="btn-primary" onclick="enviarContacto()" id="btn-contacto" style="width:100%;justify-content:center;margin-top:0.5rem;">Enviar mensaje</button>
+    </div>
+  </div>
+</section>
+
+
+<div class="divider"></div>
+
+<!-- TURNOS -->
+<section id="turnos">
+  <div class="section-label">Sin esperas</div>
+  <div class="section-title">Agendá tu Visita</div>
+  <p style="color:var(--gris);margin-bottom:2rem;font-size:0.95rem;">Elegí el auto que te interesa, seleccioná un día y horario y te espero en la agencia.</p>
+
+  <div class="turnos-grid" id="turnos-contenido">
+    <div>
+      <div class="calendario">
+        <div class="cal-header">
+          <button class="cal-nav" onclick="cambiarMes(-1)">‹</button>
+          <div class="cal-title" id="cal-titulo"></div>
+          <button class="cal-nav" onclick="cambiarMes(1)">›</button>
         </div>
-        <div>
-          <div class="contacto-label">Dirección</div>
-          <div class="contacto-valor">Juan Pringles 1788, San José<br>Guaymallén, Mendoza</div>
+        <div class="cal-dias-header">
+          <div class="cal-dia-label">Lun</div>
+          <div class="cal-dia-label">Mar</div>
+          <div class="cal-dia-label">Mié</div>
+          <div class="cal-dia-label">Jue</div>
+          <div class="cal-dia-label">Vie</div>
+          <div class="cal-dia-label">Sáb</div>
+          <div class="cal-dia-label">Dom</div>
         </div>
+        <div class="cal-dias" id="cal-dias"></div>
       </div>
     </div>
     <div>
-      <div class="contacto-label" style="margin-bottom:1rem;">Horarios de atención</div>
-      <table class="horario-tabla">
-        <tr><td>Lunes a viernes</td><td>09:30 – 19:30 hs</td></tr>
-        <tr><td>Sábados</td><td>10:00 – 13:30 hs</td></tr>
-        <tr><td>Domingos</td><td>Cerrado</td></tr>
-      </table>
-      <div style="margin-top:2rem;">
-        <a href="https://wa.me/542612516289?text=Hola%20Alejandro%2C%20quiero%20consultar%20sobre%20un%20auto" target="_blank" class="btn-primary" style="display:inline-flex;">
-          Escribime por WhatsApp
-        </a>
+      <div class="horarios-lista" id="horarios-lista">
+        <div class="horarios-titulo">Seleccioná un día para ver los horarios</div>
       </div>
     </div>
+  </div>
+
+  <!-- FORM TURNO -->
+  <div class="turno-form" id="turno-form" style="display:none;">
+    <div class="turno-resumen" id="turno-resumen"></div>
+    <div class="form-row">
+      <div class="form-group"><label>Nombre</label><input type="text" id="t-nombre" placeholder="Juan"></div>
+      <div class="form-group"><label>Apellido</label><input type="text" id="t-apellido" placeholder="Pérez"></div>
+    </div>
+    <div class="form-group"><label>Teléfono</label><input type="text" id="t-telefono" placeholder="261 XXX-XXXX"></div>
+    <div class="form-group"><label>Auto de interés <span style="color:var(--gris);font-size:0.75rem;">(opcional)</span></label><input type="text" id="t-auto" placeholder="Ej: Fiat Cronos 2023"></div>
+    <div id="turno-error" class="error-msg">Completá nombre, apellido y teléfono.</div>
+    <div id="turno-success" class="success-msg">✓ Turno confirmado. ¡Te esperamos!</div>
+    <button class="btn-primary" onclick="confirmarTurno()" id="btn-turno" style="margin-top:0.5rem;">Confirmar turno</button>
   </div>
 </section>
 
 <footer>© 2025 Alejandro Castillo · Asesor Automotor · One Quest Automotores · Guaymallén, Mendoza</footer>
 
-<a href="https://wa.me/542612516289" target="_blank" class="whatsapp-float">
+<a id="wa-float" href="#" target="_blank" class="whatsapp-float">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
 <!-- MODAL LOGIN -->
 <div class="modal-overlay" id="modalLogin">
-  <div class="modal">
-    <button class="modal-close" onclick="cerrarLogin()">×</button>
+  <div class="modal-login">
     <div class="modal-title">Acceso Admin</div>
-    <div class="form-group">
-      <label>Contraseña</label>
-      <input type="password" id="input-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')verificarLogin()">
-    </div>
+    <div class="form-group"><label>Contraseña</label><input type="password" id="input-password" placeholder="••••••••" onkeydown="if(event.key==='Enter')verificarLogin()"></div>
     <div id="login-error" class="error-msg">Contraseña incorrecta.</div>
     <button class="btn-primary" onclick="verificarLogin()" style="width:100%;justify-content:center;">Ingresar</button>
+    <button class="modal-close" onclick="cerrarLogin()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--gris);font-size:1.5rem;cursor:pointer;">×</button>
+  </div>
+</div>
+
+<!-- MODAL AUTO DETALLE -->
+<div class="modal-overlay" id="modalAuto">
+  <div class="modal" id="modalAutoContent">
+    <button class="modal-close" onclick="cerrarModalAuto()">×</button>
+    <div class="galeria" id="modal-galeria"></div>
+    <div class="modal-body">
+      <div class="modal-header">
+        <div>
+          <div class="modal-marca" id="modal-marca"></div>
+          <div class="modal-modelo" id="modal-modelo"></div>
+        </div>
+        <div>
+          <div class="modal-precio" id="modal-precio"></div>
+        </div>
+      </div>
+      <div class="modal-specs-grid">
+        <div class="modal-spec-item"><div class="modal-spec-label">Año</div><div class="modal-spec-value" id="modal-anio"></div></div>
+        <div class="modal-spec-item"><div class="modal-spec-label">Kilometraje</div><div class="modal-spec-value" id="modal-km"></div></div>
+        <div class="modal-spec-item"><div class="modal-spec-label">Transmisión</div><div class="modal-spec-value" id="modal-trans"></div></div>
+      </div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-actions">
+        <a id="modal-wa-btn" href="#" target="_blank" class="btn-wa">WhatsApp</a>
+        <button class="btn-secondary" onclick="contactarPorMail()" id="modal-mail-btn">Enviar mail</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
-// ── GITHUB API ──
 const API = `https://api.github.com/repos/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/contents/`;
+let galeriaFotos = [];
+let galeriaIndex = 0;
 
 async function githubGet(path) {
-  const r = await fetch(API + path, {
-    headers: { Authorization: `token ${CONFIG.GITHUB_TOKEN}`, Accept: 'application/vnd.github.v3+json' }
-  });
-  if (!r.ok) return null;
+  const r = await fetch(API+path,{headers:{Authorization:`token ${CONFIG.GITHUB_TOKEN}`,Accept:'application/vnd.github.v3+json'}});
+  if(!r.ok) return null;
   return r.json();
 }
 
 async function githubPut(path, content, sha) {
-  const body = { message: `Update ${path}`, content: btoa(unescape(encodeURIComponent(content))), branch: CONFIG.GITHUB_BRANCH };
-  if (sha) body.sha = sha;
-  const r = await fetch(API + path, {
-    method: 'PUT',
-    headers: { Authorization: `token ${CONFIG.GITHUB_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  });
+  const body={message:`Update ${path}`,content:btoa(unescape(encodeURIComponent(content))),branch:CONFIG.GITHUB_BRANCH};
+  if(sha) body.sha=sha;
+  const r=await fetch(API+path,{method:'PUT',headers:{Authorization:`token ${CONFIG.GITHUB_TOKEN}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
   return r.json();
-}
-
-async function githubDelete(path, sha) {
-  const r = await fetch(API + path, {
-    method: 'DELETE',
-    headers: { Authorization: `token ${CONFIG.GITHUB_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: `Delete ${path}`, sha, branch: CONFIG.GITHUB_BRANCH })
-  });
-  return r.json();
-}
-
-// ── CARGAR AUTOS ──
-async function cargarAutos() {
-  const data = await githubGet(CONFIG.DATOS_FILE);
-  if (!data) return [];
-  try {
-    const json = decodeURIComponent(escape(atob(data.content.replace(/\n/g,''))));
-    return JSON.parse(json);
-  } catch { return []; }
 }
 
 async function obtenerSha(path) {
-  const data = await githubGet(path);
-  return data ? data.sha : null;
+  const d=await githubGet(path);
+  return d?d.sha:null;
 }
 
-// ── RENDER CATÁLOGO ──
+async function cargarAutos() {
+  const d=await githubGet(CONFIG.DATOS_FILE);
+  if(!d) return [];
+  try{return JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));}catch{return [];}
+}
+
+async function cargarConfig() {
+  const d=await githubGet(CONFIG.CONFIG_FILE);
+  if(!d) return;
+  try{const cfg=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,'')))));siteConfig={...siteConfig,...cfg};}catch{}
+}
+
+function aplicarConfig() {
+  const wa=siteConfig.whatsapp;
+  document.getElementById('hero-sub').textContent=siteConfig.hero_subtitulo;
+  document.getElementById('hero-wa').href=`https://wa.me/${wa}`;
+  document.getElementById('wa-float').href=`https://wa.me/${wa}`;
+  document.getElementById('info-direccion').textContent=siteConfig.direccion;
+  document.getElementById('info-mail-link').textContent=siteConfig.mail;
+  document.getElementById('info-mail-link').href=`mailto:${siteConfig.mail}`;
+  document.getElementById('info-wa-link').href=`https://wa.me/${wa}`;
+  document.getElementById('info-horario-semana').textContent=siteConfig.horario_semana;
+  document.getElementById('info-horario-sabado').textContent=siteConfig.horario_sabado;
+}
+
+// ── CATÁLOGO ──
 async function renderCatalogo() {
-  const grid = document.getElementById('catalogo-grid');
-  const autos = await cargarAutos();
-  if (!autos.length) {
-    grid.innerHTML = '<div class="empty-state"><div style="font-size:2rem">🚗</div><p>Próximamente nuevos vehículos disponibles.</p></div>';
-    return;
-  }
-  grid.innerHTML = autos.map((a, i) => `
-    <div class="auto-card">
-      ${a.foto ? `<img class="auto-card-img" src="${a.foto}" alt="${a.modelo}" loading="lazy">` : '<div class="auto-card-img-placeholder">🚗</div>'}
+  const grid=document.getElementById('catalogo-grid');
+  const autos=await cargarAutos();
+  if(!autos.length){grid.innerHTML='<div class="empty-state"><div style="font-size:2rem">🚗</div><p>Próximamente nuevos vehículos disponibles.</p></div>';return;}
+  grid.innerHTML=autos.map((a,i)=>{
+    const fotos=Array.isArray(a.fotos)?a.fotos:(a.foto?[a.foto]:[]);
+    return `
+    <div class="auto-card" onclick="abrirAuto(${i})">
+      ${fotos.length?`<img class="auto-card-img" src="${fotos[0]}" alt="${a.modelo}" loading="lazy">`:'<div class="auto-card-img-placeholder">🚗</div>'}
       <div class="auto-card-badge">Disponible</div>
       <div class="auto-card-body">
         <div class="auto-marca">${a.marca}</div>
@@ -393,138 +574,602 @@ async function renderCatalogo() {
           <div class="auto-spec">📍 ${a.km}</div>
           <div class="auto-spec">⚙ ${a.transmision}</div>
         </div>
-        <div class="auto-precio">${a.precio} <span>· Precio con transferencia</span></div>
+        <div class="auto-precio">${a.precio} <span></span></div>
       </div>
       <div class="auto-card-footer">
-        <a href="https://wa.me/${CONFIG.WHATSAPP}?text=Hola%20Alejandro%2C%20me%20interesa%20el%20${encodeURIComponent(a.marca+' '+a.modelo+' '+a.anio)}" target="_blank" class="btn-consultar">Consultar</a>
+        <span class="auto-card-ver">Ver detalles →</span>
+        ${fotos.length>1?`<span style="font-size:0.75rem;color:var(--gris)">📷 ${fotos.length} fotos</span>`:''}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
-// ── RENDER ADMIN LISTA ──
+// ── MODAL AUTO ──
+async function abrirAuto(index) {
+  const autos=await cargarAutos();
+  const a=autos[index];
+  const fotos=Array.isArray(a.fotos)?a.fotos:(a.foto?[a.foto]:[]);
+  galeriaFotos=fotos;
+  galeriaIndex=0;
+
+  document.getElementById('modal-marca').textContent=a.marca;
+  document.getElementById('modal-modelo').textContent=a.modelo;
+  document.getElementById('modal-precio').innerHTML=`${a.precio}`;
+  document.getElementById('modal-anio').textContent=a.anio;
+  document.getElementById('modal-km').textContent=a.km;
+  document.getElementById('modal-trans').textContent=a.transmision;
+  document.getElementById('modal-desc').textContent=a.descripcion||'';
+
+  const waText=encodeURIComponent(`Hola Alejandro, me interesa el ${a.marca} ${a.modelo} ${a.anio} que vi en tu página. ¿Podés darme más información?`);
+  document.getElementById('modal-wa-btn').href=`https://wa.me/${siteConfig.whatsapp}?text=${waText}`;
+  document.getElementById('modal-mail-btn').onclick=()=>contactarPorMailAuto(a);
+
+  renderGaleria();
+  document.getElementById('modalAuto').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function renderGaleria() {
+  const g=document.getElementById('modal-galeria');
+  if(!galeriaFotos.length){g.innerHTML='<div class="galeria-main-placeholder">🚗</div>';return;}
+  g.innerHTML=`
+    <img class="galeria-main" id="galeria-main-img" src="${galeriaFotos[galeriaIndex]}" alt="foto">
+    ${galeriaFotos.length>1?`
+    <button class="galeria-nav galeria-prev" onclick="cambiarFoto(-1)">‹</button>
+    <button class="galeria-nav galeria-next" onclick="cambiarFoto(1)">›</button>
+    <div class="galeria-thumbs">
+      ${galeriaFotos.map((f,i)=>`<img class="galeria-thumb ${i===galeriaIndex?'active':''}" src="${f}" onclick="irAFoto(${i})">`).join('')}
+    </div>`:''}
+  `;
+}
+
+function cambiarFoto(dir) {
+  galeriaIndex=(galeriaIndex+dir+galeriaFotos.length)%galeriaFotos.length;
+  renderGaleria();
+}
+
+function irAFoto(i) {
+  galeriaIndex=i;
+  renderGaleria();
+}
+
+function cerrarModalAuto() {
+  document.getElementById('modalAuto').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+document.getElementById('modalAuto').addEventListener('click',function(e){
+  if(e.target===this) cerrarModalAuto();
+});
+
+function contactarPorMailAuto(a) {
+  document.getElementById('c-auto').value=`${a.marca} ${a.modelo} ${a.anio}`;
+  cerrarModalAuto();
+  document.getElementById('contacto').scrollIntoView({behavior:'smooth'});
+}
+
+// ── ADMIN LISTA ──
 async function renderAdminLista() {
-  const lista = document.getElementById('admin-lista');
-  const autos = await cargarAutos();
-  if (!autos.length) {
-    lista.innerHTML = '<p style="color:var(--gris)">No hay autos cargados todavía.</p>';
-    return;
-  }
-  lista.innerHTML = autos.map((a, i) => `
+  const lista=document.getElementById('admin-lista');
+  const autos=await cargarAutos();
+  if(!autos.length){lista.innerHTML='<p style="color:var(--gris)">No hay autos cargados todavía.</p>';return;}
+  lista.innerHTML=autos.map((a,i)=>{
+    const fotos=Array.isArray(a.fotos)?a.fotos:(a.foto?[a.foto]:[]);
+    return `
     <div class="admin-auto-item">
-      ${a.foto ? `<img class="admin-auto-img" src="${a.foto}">` : '<div class="admin-auto-img" style="display:flex;align-items:center;justify-content:center;font-size:1.5rem">🚗</div>'}
+      ${fotos.length?`<img class="admin-auto-img" src="${fotos[0]}" style="width:80px;height:55px;object-fit:cover;">`:'<div class="admin-auto-img">🚗</div>'}
       <div class="admin-auto-info">
         <div class="admin-auto-nombre">${a.marca} ${a.modelo}</div>
-        <div class="admin-auto-detalle">${a.anio} · ${a.km} · ${a.precio}</div>
+        <div class="admin-auto-detalle">${a.anio} · ${a.km} · ${a.precio} · ${fotos.length} foto${fotos.length!==1?'s':''}</div>
       </div>
-      <button class="btn-delete" onclick="eliminarAuto(${i})">Eliminar</button>
-    </div>
-  `).join('');
+      <div class="admin-auto-btns">
+        <button class="btn-edit" onclick="editarAuto(${i})">Editar</button>
+        <button class="btn-delete" onclick="eliminarAuto(${i})">Eliminar</button>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-// ── AGREGAR AUTO ──
-async function agregarAuto() {
-  const marca = document.getElementById('f-marca').value.trim();
-  const modelo = document.getElementById('f-modelo').value.trim();
-  const anio = document.getElementById('f-anio').value.trim();
-  const km = document.getElementById('f-km').value.trim();
-  const precio = document.getElementById('f-precio').value.trim();
-  const transmision = document.getElementById('f-transmision').value;
-  const fotoFile = document.getElementById('f-foto').files[0];
+// ── PREVIEW FOTOS ──
+// ── DRAG & DROP FOTOS ──
+let dragSrc = null;
 
-  const err = document.getElementById('form-error');
-  const suc = document.getElementById('form-success');
-  err.style.display = 'none'; suc.style.display = 'none';
-
-  if (!marca || !modelo || !anio || !km || !precio) {
-    err.style.display = 'block'; return;
-  }
-
-  const btn = document.getElementById('btn-agregar');
-  btn.textContent = 'Guardando...'; btn.disabled = true;
-
-  let fotoUrl = '';
-  if (fotoFile) {
-    // Subir foto a GitHub
-    const fotoNombre = `fotos/${Date.now()}_${fotoFile.name.replace(/[^a-z0-9.]/gi,'_')}`;
-    const base64 = await fileToBase64Raw(fotoFile);
-    const fotoSha = await obtenerSha(fotoNombre);
-    const fotoBody = { message: `Add foto ${fotoNombre}`, content: base64, branch: CONFIG.GITHUB_BRANCH };
-    if (fotoSha) fotoBody.sha = fotoSha;
-    await fetch(API + fotoNombre, {
-      method: 'PUT',
-      headers: { Authorization: `token ${CONFIG.GITHUB_TOKEN}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
-      body: JSON.stringify(fotoBody)
+function initDragFotos() {
+  const lista = document.getElementById('fotos-preview-lista');
+  lista.querySelectorAll('.foto-thumb-admin').forEach(el => {
+    el.draggable = true;
+    el.addEventListener('dragstart', e => { dragSrc = el; el.classList.add('dragging'); });
+    el.addEventListener('dragend', e => { el.classList.remove('dragging'); lista.querySelectorAll('.foto-thumb-admin').forEach(x=>x.classList.remove('drag-over')); actualizarBadges(); });
+    el.addEventListener('dragover', e => { e.preventDefault(); el.classList.add('drag-over'); });
+    el.addEventListener('dragleave', e => { el.classList.remove('drag-over'); });
+    el.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrc !== el) {
+        const children = [...lista.querySelectorAll('.foto-thumb-admin')];
+        const srcIdx = children.indexOf(dragSrc);
+        const dstIdx = children.indexOf(el);
+        if (srcIdx < dstIdx) lista.insertBefore(dragSrc, el.nextSibling);
+        else lista.insertBefore(dragSrc, el);
+      }
+      el.classList.remove('drag-over');
+      actualizarBadges();
     });
-    fotoUrl = `https://raw.githubusercontent.com/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/${CONFIG.GITHUB_BRANCH}/${fotoNombre}`;
+  });
+}
+
+function actualizarBadges() {
+  document.querySelectorAll('#fotos-preview-lista .foto-thumb-admin').forEach((el, i) => {
+    const badge = el.querySelector('.foto-badge');
+    if (badge) badge.textContent = i === 0 ? 'PRINCIPAL' : `Foto ${i+1}`;
+  });
+}
+
+function getFotosOrdenadas() {
+  // Devuelve src de fotos en el orden visual actual
+  return [...document.querySelectorAll('#fotos-preview-lista .foto-thumb-admin img')].map(img => img.src);
+}
+
+function previewFotos(input) {
+  const lista=document.getElementById('fotos-preview-lista');
+  // Agregar a las existentes, no reemplazar
+  Array.from(input.files).forEach((file,i)=>{
+    const r=new FileReader();
+    r.onload=e=>{
+      const div=document.createElement('div');
+      div.className='foto-thumb-admin';
+      div.dataset.tipo='nueva';
+      div.dataset.file=file.name;
+      div.innerHTML=`<img src="${e.target.result}"><span class="foto-badge">Foto</span><button onclick="this.parentElement.remove();actualizarBadges();" type="button">×</button>`;
+      lista.appendChild(div);
+      initDragFotos();
+      actualizarBadges();
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+// ── EDITAR AUTO ──
+async function editarAuto(index) {
+  const autos=await cargarAutos();
+  const a=autos[index];
+  const fotos=Array.isArray(a.fotos)?a.fotos:(a.foto?[a.foto]:[]);
+  fotosEdicion=[...fotos];
+
+  document.getElementById('f-marca').value=a.marca;
+  document.getElementById('f-modelo').value=a.modelo;
+  document.getElementById('f-anio').value=a.anio;
+  document.getElementById('f-km').value=a.km;
+  document.getElementById('f-precio').value=a.precio;
+  document.getElementById('f-transmision').value=a.transmision;
+  document.getElementById('f-desc').value=a.descripcion||'';
+  document.getElementById('f-edit-index').value=index;
+  document.getElementById('form-auto-titulo').textContent='Editando auto';
+  document.getElementById('btn-agregar').textContent='Guardar cambios';
+  document.getElementById('btn-cancelar').style.display='inline-flex';
+
+  const lista=document.getElementById('fotos-preview-lista');
+  lista.innerHTML=fotos.map((f,i)=>`
+    <div class="foto-thumb-admin" data-tipo="existente" data-url="${f}">
+      <img src="${f}">
+      <span class="foto-badge">${i===0?'PRINCIPAL':'Foto '+(i+1)}</span>
+      <button onclick="this.parentElement.remove();actualizarBadges();" type="button">×</button>
+    </div>`).join('');
+  initDragFotos();
+
+  document.getElementById('tab-autos').scrollIntoView({behavior:'smooth'});
+}
+
+function quitarFotoEdicion(i) {
+  fotosEdicion.splice(i,1);
+  const lista=document.getElementById('fotos-preview-lista');
+  const thumbs=lista.querySelectorAll('.foto-thumb-admin');
+  thumbs[i].remove();
+}
+
+function cancelarEdicion() {
+  document.getElementById('f-edit-index').value='-1';
+  document.getElementById('form-auto-titulo').textContent='Agregar nuevo auto';
+  document.getElementById('btn-agregar').textContent='Agregar auto';
+  document.getElementById('btn-cancelar').style.display='none';
+  ['f-marca','f-modelo','f-anio','f-km','f-precio','f-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-fotos').value='';
+  document.getElementById('fotos-preview-lista').innerHTML='';
+  fotosEdicion=[];
+}
+
+// ── GUARDAR AUTO ──
+async function guardarAuto() {
+  const marca=document.getElementById('f-marca').value.trim();
+  const modelo=document.getElementById('f-modelo').value.trim();
+  const anio=document.getElementById('f-anio').value.trim();
+  const km=document.getElementById('f-km').value.trim();
+  const precio=document.getElementById('f-precio').value.trim();
+  const transmision=document.getElementById('f-transmision').value;
+  const descripcion=document.getElementById('f-desc').value.trim();
+  const archivos=document.getElementById('f-fotos').files;
+  const editIndex=parseInt(document.getElementById('f-edit-index').value);
+
+  const err=document.getElementById('form-error');
+  const suc=document.getElementById('form-success');
+  err.style.display='none';suc.style.display='none';
+  if(!marca||!modelo||!anio||!km||!precio){err.style.display='block';return;}
+
+  const btn=document.getElementById('btn-agregar');
+  btn.textContent='Guardando...';btn.disabled=true;
+
+  // Obtener thumbs en orden visual
+  const thumbs = [...document.querySelectorAll('#fotos-preview-lista .foto-thumb-admin')];
+  let fotosUrls = [];
+
+  for (const thumb of thumbs) {
+    if (thumb.dataset.tipo === 'existente') {
+      // Ya está en GitHub, mantener URL
+      fotosUrls.push(thumb.dataset.url);
+    } else {
+      // Es nueva, buscar el archivo por nombre y subirla
+      const fileName = thumb.dataset.file;
+      const fileObj = Array.from(archivos).find(f => f.name === fileName);
+      if (fileObj) {
+        const nombre = `fotos/${Date.now()}_${Math.random().toString(36).substr(2,5)}_${fileObj.name.replace(/[^a-z0-9.]/gi,'_')}`;
+        const base64 = await fileToBase64Raw(fileObj);
+        const sha = await obtenerSha(nombre);
+        const body = {message:`Add foto`,content:base64,branch:CONFIG.GITHUB_BRANCH};
+        if(sha) body.sha = sha;
+        await fetch(API+nombre,{method:'PUT',headers:{Authorization:`token ${CONFIG.GITHUB_TOKEN}`,Accept:'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});
+        // Esperar un poco entre subidas para no saturar la API
+        await new Promise(r => setTimeout(r, 500));
+        fotosUrls.push(`https://raw.githubusercontent.com/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/${CONFIG.GITHUB_BRANCH}/${nombre}`);
+      }
+    }
   }
 
-  const autos = await cargarAutos();
-  autos.push({ marca, modelo, anio, km, precio, transmision, foto: fotoUrl });
-  const sha = await obtenerSha(CONFIG.DATOS_FILE);
-  await githubPut(CONFIG.DATOS_FILE, JSON.stringify(autos, null, 2), sha);
+  const autos=await cargarAutos();
+  const nuevoAuto={marca,modelo,anio,km,precio,transmision,descripcion,fotos:fotosUrls};
+  if(editIndex>=0){autos[editIndex]=nuevoAuto;}else{autos.push(nuevoAuto);}
 
-  // Limpiar form
-  ['f-marca','f-modelo','f-anio','f-km','f-precio'].forEach(id => document.getElementById(id).value = '');
-  document.getElementById('f-foto').value = '';
-  document.getElementById('foto-preview').style.display = 'none';
+  const sha=await obtenerSha(CONFIG.DATOS_FILE);
+  await githubPut(CONFIG.DATOS_FILE,JSON.stringify(autos,null,2),sha);
 
-  btn.textContent = 'Agregar auto'; btn.disabled = false;
-  suc.style.display = 'block';
-  setTimeout(() => suc.style.display = 'none', 3000);
-
+  cancelarEdicion();
+  btn.textContent=editIndex>=0?'Guardar cambios':'Agregar auto';
+  btn.disabled=false;
+  suc.style.display='block';
+  setTimeout(()=>suc.style.display='none',3000);
   await renderAdminLista();
   await renderCatalogo();
 }
 
 // ── ELIMINAR AUTO ──
 async function eliminarAuto(index) {
-  if (!confirm('¿Seguro que querés eliminar este auto?')) return;
-  const autos = await cargarAutos();
-  autos.splice(index, 1);
-  const sha = await obtenerSha(CONFIG.DATOS_FILE);
-  await githubPut(CONFIG.DATOS_FILE, JSON.stringify(autos, null, 2), sha);
+  if(!confirm('¿Seguro que querés eliminar este auto?')) return;
+  const autos=await cargarAutos();
+  autos.splice(index,1);
+  const sha=await obtenerSha(CONFIG.DATOS_FILE);
+  await githubPut(CONFIG.DATOS_FILE,JSON.stringify(autos,null,2),sha);
   await renderAdminLista();
   await renderCatalogo();
 }
 
-// ── HELPERS ──
-function fileToBase64Raw(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result.split(',')[1]);
-    r.onerror = rej;
-    r.readAsDataURL(file);
-  });
+// ── CONFIG ──
+async function guardarConfig() {
+  const btn=document.getElementById('btn-cfg');
+  const err=document.getElementById('cfg-error');
+  const suc=document.getElementById('cfg-success');
+  err.style.display='none';suc.style.display='none';
+  btn.textContent='Guardando...';btn.disabled=true;
+  siteConfig.whatsapp=document.getElementById('cfg-whatsapp').value.trim()||siteConfig.whatsapp;
+  siteConfig.mail=document.getElementById('cfg-mail').value.trim()||siteConfig.mail;
+  siteConfig.direccion=document.getElementById('cfg-direccion').value.trim()||siteConfig.direccion;
+  siteConfig.horario_semana=document.getElementById('cfg-horario-semana').value.trim()||siteConfig.horario_semana;
+  siteConfig.horario_sabado=document.getElementById('cfg-horario-sabado').value.trim()||siteConfig.horario_sabado;
+  siteConfig.hero_subtitulo=document.getElementById('cfg-hero-sub').value.trim()||siteConfig.hero_subtitulo;
+  try{
+    const sha=await obtenerSha(CONFIG.CONFIG_FILE);
+    await githubPut(CONFIG.CONFIG_FILE,JSON.stringify(siteConfig,null,2),sha);
+    aplicarConfig();
+    suc.style.display='block';
+    setTimeout(()=>suc.style.display='none',3000);
+  }catch{err.style.display='block';}
+  btn.textContent='Guardar configuración';btn.disabled=false;
 }
 
-function previewFoto(input) {
-  const preview = document.getElementById('foto-preview');
-  if (input.files && input.files[0]) {
-    const reader = new FileReader();
-    reader.onload = e => { preview.src = e.target.result; preview.style.display = 'block'; };
-    reader.readAsDataURL(input.files[0]);
+function cargarFormConfig(){
+  document.getElementById('cfg-whatsapp').value=siteConfig.whatsapp;
+  document.getElementById('cfg-mail').value=siteConfig.mail;
+  document.getElementById('cfg-direccion').value=siteConfig.direccion;
+  document.getElementById('cfg-horario-semana').value=siteConfig.horario_semana;
+  document.getElementById('cfg-horario-sabado').value=siteConfig.horario_sabado;
+  document.getElementById('cfg-hero-sub').value=siteConfig.hero_subtitulo;
+}
+
+function switchTab(tab,el){
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab-content').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  el.classList.add('active');
+  if(tab==='config') cargarFormConfig();
+  if(tab==='autos') renderAdminLista();
+  if(tab==='turnos') renderAdminTurnos();
+}
+
+
+// ── TURNOS ──
+const TURNOS_FILE = 'turnos.json';
+let calFecha = new Date();
+let diaSeleccionado = null;
+let horaSeleccionada = null;
+
+function generarHorarios(diaSemana) {
+  // 0=Dom,1=Lun...6=Sab
+  if (diaSemana === 0) return []; // Domingo
+  const slots = [];
+  if (diaSemana >= 1 && diaSemana <= 5) {
+    // Lun-Vie 09:30 a 19:00
+    let h = 9, m = 30;
+    while (!(h === 19 && m === 0) && !(h > 19)) {
+      slots.push(`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
+      m += 30;
+      if (m >= 60) { h++; m = 0; }
+    }
+  } else if (diaSemana === 6) {
+    // Sab 10:00 a 13:00
+    let h = 10, m = 0;
+    while (!(h === 13 && m === 0) && !(h > 13)) {
+      slots.push(`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
+      m += 30;
+      if (m >= 60) { h++; m = 0; }
+    }
   }
+  return slots;
+}
+
+async function cargarTurnos() {
+  const d = await githubGet(TURNOS_FILE);
+  if (!d) return [];
+  try { return JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,''))))); } catch { return []; }
+}
+
+function renderCalendario() {
+  const hoy = new Date();
+  const anio = calFecha.getFullYear();
+  const mes = calFecha.getMonth();
+  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  document.getElementById('cal-titulo').textContent = `${meses[mes]} ${anio}`;
+
+  const primerDia = new Date(anio, mes, 1);
+  const ultimoDia = new Date(anio, mes+1, 0);
+  let inicioGrid = primerDia.getDay(); // 0=Dom
+  inicioGrid = inicioGrid === 0 ? 6 : inicioGrid - 1; // Convertir a Lun=0
+
+  const maxDias = new Date(hoy.getTime() + 2*24*60*60*1000); // hoy + 2 días
+
+  let html = '';
+  for (let i = 0; i < inicioGrid; i++) html += '<div class="cal-dia cal-dia-empty"></div>';
+
+  for (let d = 1; d <= ultimoDia.getDate(); d++) {
+    const fecha = new Date(anio, mes, d);
+    const fechaStr = `${anio}-${String(mes+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const esHoy = fecha.toDateString() === hoy.toDateString();
+    const diaSem = fecha.getDay();
+    const esDomingo = diaSem === 0;
+    const esPasado = fecha < new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+    const esMuyLejos = fecha > maxDias;
+    const deshabilitado = esDomingo || esPasado || esMuyLejos;
+    const seleccionado = diaSeleccionado === fechaStr;
+
+    let cls = 'cal-dia';
+    if (deshabilitado) cls += ' cal-dia-disabled';
+    if (esHoy && !deshabilitado) cls += ' cal-dia-hoy';
+    if (seleccionado) cls += ' active';
+
+    const click = deshabilitado ? '' : `onclick="seleccionarDia('${fechaStr}')"`;
+    html += `<div class="${cls}" ${click}>${d}</div>`;
+  }
+
+  document.getElementById('cal-dias').innerHTML = html;
+}
+
+async function seleccionarDia(fechaStr) {
+  diaSeleccionado = fechaStr;
+  horaSeleccionada = null;
+  document.getElementById('turno-form').style.display = 'none';
+  renderCalendario();
+
+  const lista = document.getElementById('horarios-lista');
+  lista.innerHTML = '<div class="loading"><span class="spinner"></span> Cargando horarios...</div>';
+
+  const fecha = new Date(fechaStr + 'T12:00:00');
+  const diaSem = fecha.getDay();
+  const slots = generarHorarios(diaSem);
+  const turnos = await cargarTurnos();
+  const ocupados = turnos.filter(t => t.fecha === fechaStr).map(t => t.hora);
+
+  const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const [anio,mes,dia] = fechaStr.split('-');
+
+  lista.innerHTML = `<div class="horarios-titulo">${dias[diaSem]} ${parseInt(dia)} de ${meses[parseInt(mes)-1]}</div>` +
+    slots.map(h => {
+      const ocu = ocupados.includes(h);
+      return `<button class="horario-btn ${ocu?'ocupado':''}" ${ocu?'disabled':''} onclick="seleccionarHora('${h}')">${h} hs ${ocu?'· Ocupado':''}</button>`;
+    }).join('');
+}
+
+function seleccionarHora(hora) {
+  horaSeleccionada = hora;
+  document.querySelectorAll('.horario-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+
+  const fecha = new Date(diaSeleccionado + 'T12:00:00');
+  const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const [anio,mes,dia] = diaSeleccionado.split('-');
+
+  document.getElementById('turno-resumen').innerHTML =
+    `Turno seleccionado: <strong>${dias[fecha.getDay()]} ${parseInt(dia)} de ${meses[parseInt(mes)-1]} a las ${hora} hs</strong>`;
+  document.getElementById('turno-form').style.display = 'block';
+  document.getElementById('turno-form').scrollIntoView({behavior:'smooth'});
+}
+
+function cambiarMes(dir) {
+  calFecha.setMonth(calFecha.getMonth() + dir);
+  diaSeleccionado = null;
+  horaSeleccionada = null;
+  document.getElementById('horarios-lista').innerHTML = '<div class="horarios-titulo">Seleccioná un día para ver los horarios</div>';
+  document.getElementById('turno-form').style.display = 'none';
+  renderCalendario();
+}
+
+async function confirmarTurno() {
+  const nombre = document.getElementById('t-nombre').value.trim();
+  const apellido = document.getElementById('t-apellido').value.trim();
+  const telefono = document.getElementById('t-telefono').value.trim();
+  const autoInteres = document.getElementById('t-auto').value.trim();
+  const err = document.getElementById('turno-error');
+  const suc = document.getElementById('turno-success');
+  err.style.display = 'none'; suc.style.display = 'none';
+
+  if (!nombre || !apellido || !telefono) { err.style.display = 'block'; return; }
+  if (!diaSeleccionado || !horaSeleccionada) { err.textContent = 'Seleccioná un día y horario.'; err.style.display = 'block'; return; }
+
+  const btn = document.getElementById('btn-turno');
+  btn.textContent = 'Confirmando...'; btn.disabled = true;
+
+  // Verificar que el turno sigue libre
+  const turnos = await cargarTurnos();
+  const yaOcupado = turnos.some(t => t.fecha === diaSeleccionado && t.hora === horaSeleccionada);
+  if (yaOcupado) {
+    err.textContent = 'Ese horario acaba de ser tomado. Elegí otro.';
+    err.style.display = 'block';
+    btn.textContent = 'Confirmar turno'; btn.disabled = false;
+    seleccionarDia(diaSeleccionado);
+    return;
+  }
+
+  // Guardar turno
+  const nuevoTurno = { fecha: diaSeleccionado, hora: horaSeleccionada, nombre, apellido, telefono, auto: autoInteres || '-', timestamp: new Date().toISOString() };
+  turnos.push(nuevoTurno);
+  const sha = await obtenerSha(TURNOS_FILE);
+  await githubPut(TURNOS_FILE, JSON.stringify(turnos, null, 2), sha);
+
+  // Mandar WhatsApp
+  const fecha = new Date(diaSeleccionado + 'T12:00:00');
+  const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const [anio,mes,dia] = diaSeleccionado.split('-');
+  const msg = encodeURIComponent(`🗓 Nuevo turno agendado\n\nCliente: ${nombre} ${apellido}\nTeléfono: ${telefono}\nFecha: ${dias[fecha.getDay()]} ${parseInt(dia)} de ${meses[parseInt(mes)-1]} a las ${horaSeleccionada} hs\nAuto de interés: ${autoInteres||'No especificó'}`);
+  window.open(`https://wa.me/${siteConfig.whatsapp}?text=${msg}`, '_blank');
+
+  suc.style.display = 'block';
+  ['t-nombre','t-apellido','t-telefono','t-auto'].forEach(id => document.getElementById(id).value = '');
+  diaSeleccionado = null; horaSeleccionada = null;
+  renderCalendario();
+  document.getElementById('horarios-lista').innerHTML = '<div class="horarios-titulo">Seleccioná un día para ver los horarios</div>';
+  document.getElementById('turno-form').style.display = 'none';
+
+  btn.textContent = 'Confirmar turno'; btn.disabled = false;
+}
+
+// ── ADMIN TURNOS ──
+async function renderAdminTurnos() {
+  const lista = document.getElementById('admin-turnos-lista');
+  const turnos = await cargarTurnos();
+  if (!turnos.length) { lista.innerHTML = '<p style="color:var(--gris)">No hay turnos agendados.</p>'; return; }
+
+  const hoy = new Date();
+  const ordenados = [...turnos].sort((a,b) => (a.fecha+a.hora).localeCompare(b.fecha+b.hora));
+  const dias = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+  lista.innerHTML = ordenados.map((t,i) => {
+    const fecha = new Date(t.fecha + 'T12:00:00');
+    const [anio,mes,dia] = t.fecha.split('-');
+    const pasado = fecha < new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+    return `
+    <div class="turno-item" style="${pasado?'opacity:0.5':''}">
+      <div class="turno-info">
+        <div class="turno-fecha">${dias[fecha.getDay()]} ${parseInt(dia)} de ${meses[parseInt(mes)-1]} — ${t.hora} hs ${pasado?'<span style="color:var(--gris);font-size:0.75rem;">(pasado)</span>':''}</div>
+        <div class="turno-detalle">${t.nombre} ${t.apellido} · ${t.telefono} · Auto: ${t.auto}</div>
+      </div>
+      <button class="btn-delete" onclick="liberarTurno('${t.fecha}','${t.hora}')">Liberar</button>
+    </div>`;
+  }).join('');
+}
+
+async function liberarTurno(fecha, hora) {
+  if (!confirm('¿Liberar este turno?')) return;
+  const turnos = await cargarTurnos();
+  const nuevos = turnos.filter(t => !(t.fecha === fecha && t.hora === hora));
+  const sha = await obtenerSha(TURNOS_FILE);
+  await githubPut(TURNOS_FILE, JSON.stringify(nuevos, null, 2), sha);
+  await renderAdminTurnos();
+}
+
+async function limpiarTurnosPasados() {
+  if (!confirm('¿Eliminar todos los turnos pasados?')) return;
+  const hoy = new Date();
+  const turnos = await cargarTurnos();
+  const nuevos = turnos.filter(t => new Date(t.fecha + 'T12:00:00') >= new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate()));
+  const sha = await obtenerSha(TURNOS_FILE);
+  await githubPut(TURNOS_FILE, JSON.stringify(nuevos, null, 2), sha);
+  await renderAdminTurnos();
+}
+
+// ── CONTACTO ──
+async function enviarContacto(){
+  const nombre=document.getElementById('c-nombre').value.trim();
+  const apellido=document.getElementById('c-apellido').value.trim();
+  const telefono=document.getElementById('c-telefono').value.trim();
+  const tipo=document.getElementById('c-tipo').value;
+  const auto=document.getElementById('c-auto').value.trim();
+  const mensaje=document.getElementById('c-mensaje').value.trim();
+  const err=document.getElementById('contacto-error');
+  const suc=document.getElementById('contacto-success');
+  err.style.display='none';suc.style.display='none';
+  if(!nombre||!apellido||!telefono){err.textContent='Completá nombre, apellido y teléfono.';err.style.display='block';return;}
+  const btn=document.getElementById('btn-contacto');
+  btn.textContent='Enviando...';btn.disabled=true;
+  try{
+    await emailjs.send(CONFIG.EMAILJS_SERVICE,CONFIG.EMAILJS_TEMPLATE,{nombre,apellido,telefono,tipo,auto:auto||'No especificado',mensaje:mensaje||'-'});
+    suc.style.display='block';
+    ['c-nombre','c-apellido','c-telefono','c-auto','c-mensaje'].forEach(id=>document.getElementById(id).value='');
+  }catch(e){err.textContent='Error al enviar. Intentá de nuevo.';err.style.display='block';}
+  btn.textContent='Enviar mensaje';btn.disabled=false;
+}
+
+function contactarPorMail(){
+  cerrarModalAuto();
+  setTimeout(()=>document.getElementById('contacto').scrollIntoView({behavior:'smooth'}),300);
+}
+
+// ── HELPERS ──
+function fileToBase64Raw(file){
+  return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(file);});
 }
 
 // ── LOGIN ──
-function abrirLogin() { document.getElementById('modalLogin').classList.add('active'); }
-function cerrarLogin() { document.getElementById('modalLogin').classList.remove('active'); document.getElementById('login-error').style.display='none'; }
-function verificarLogin() {
-  const pass = document.getElementById('input-password').value;
-  if (pass === CONFIG.ADMIN_PASSWORD) {
+function abrirLogin(){document.getElementById('modalLogin').classList.add('active');}
+function cerrarLogin(){document.getElementById('modalLogin').classList.remove('active');document.getElementById('login-error').style.display='none';}
+function verificarLogin(){
+  if(document.getElementById('input-password').value===CONFIG.ADMIN_PASSWORD){
     cerrarLogin();
     document.getElementById('adminPanel').classList.add('active');
-    document.getElementById('adminPanel').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('adminPanel').scrollIntoView({behavior:'smooth'});
     renderAdminLista();
-  } else {
-    document.getElementById('login-error').style.display = 'block';
-  }
+  }else{document.getElementById('login-error').style.display='block';}
 }
-function cerrarAdmin() { document.getElementById('adminPanel').classList.remove('active'); }
+function cerrarAdmin(){document.getElementById('adminPanel').classList.remove('active');}
+
+document.getElementById('modalLogin').addEventListener('click',function(e){if(e.target===this)cerrarLogin();});
 
 // ── INIT ──
-renderCatalogo();
+emailjs.init(CONFIG.EMAILJS_PUBLIC);
+(async()=>{
+  await cargarConfig();
+  aplicarConfig();
+  await renderCatalogo();
+  renderCalendario();
+})();
 </script>
 </body>
 </html>
